@@ -12,6 +12,9 @@ export default class Particle {
 		// Store the speed of the particle
 		this.speed = new Vector2D(vx, vy);
 		
+		// Initialise the spatial hash variable
+		this.spatialHash = null;
+		
 		// Store the canvas instance
 		this.ctx = canvasCtx;
 	}
@@ -31,6 +34,11 @@ export default class Particle {
 		if (this.position.y < 0 || this.position.y > this.ctx.canvas.height) {
 			this.speed = this.speed.reverseY();
 		}
+	}
+	
+	setSpatialHash(hash) {
+		// Update the spatial hash of the particle
+		this.spatialHash = hash;
 	}
 	
 	render() {

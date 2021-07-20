@@ -1,4 +1,5 @@
 import Canvas from './Canvas';
+import GridController from './GridController';
 import ParticleController from './ParticleController';
 
 /**
@@ -22,8 +23,11 @@ class App {
  		// Create a canvas instance
  		this.canvas = new Canvas(canvasWidth, canvasHeight);
  		
+ 		// Create a grid controller instance
+ 		this.gridController = new GridController(gridX, gridY, this.canvas.ctx);
+ 		
  		// Create a particle controller instance
- 		this.particleController = new ParticleController(numParticles, this.canvas.ctx);
+ 		this.particleController = new ParticleController(numParticles, this.gridController, this.canvas.ctx);
  		
  		// Run the simulation
  		window.requestAnimationFrame(this.animate.bind(this));

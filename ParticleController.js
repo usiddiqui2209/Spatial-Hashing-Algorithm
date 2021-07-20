@@ -5,7 +5,10 @@ import Particle from './Particle';
  */
 
 export default class ParticleController {
-	constructor(numParticles, canvasCtx) {
+	constructor(numParticles, gridController, canvasCtx) {
+		// Store the grid controller
+		this.gridController = gridController;
+		
 		// Store the canvas context variable
 		this.ctx = canvasCtx;
 		
@@ -14,9 +17,6 @@ export default class ParticleController {
 		
 		// Create particle array
 		this.initParticles(numParticles);
-		
-		// Draw the particles
-		//this.renderParticles();
 	}
 	
 	initParticles(numParticles) {
@@ -40,6 +40,10 @@ export default class ParticleController {
 			// Create a particle instance
 			const particle = new Particle(px, py, vx, vy, this.ctx);
 			
+			// Compute the spatial hash
+			const spatialHash = this.gridController.getSpatialHash(px, py);
+			particle.setSpatialHash(spatialHash);
+			
 			// Append the particle instance to the particle array
 			this.particles.push(particle);
 		}
@@ -56,6 +60,10 @@ export default class ParticleController {
 			
 			// Update the position of the particle
 			particle.updatePosition(x, y);
+			
+			// Calculate the new spatial hash for the particle
+			const spatialHash = this.gridController.getSpatialHash(x, y);
+			particle.setSpatialHash(spatialHash);
 			
 			// Render the new position of the particle
 			particle.render();
